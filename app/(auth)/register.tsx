@@ -4,47 +4,60 @@ import {
     KeyboardAvoidingView,
     Platform,
     SafeAreaView,
-    Text, TouchableOpacity,
-    View
+    Text,
+    TouchableOpacity,
+    View,
+    Alert
 } from "react-native";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import ScrollView = Animated.ScrollView;
 import {useRouter} from "expo-router";
 import {useState} from "react";
 import FormField from "@/components/FormField";
+import axios from "axios";
 
 const RegisterScreen = () => {
     const router = useRouter();
-    const [form, setForm] = useState({ email: "", username: "", password: "" });
+    const [form, setForm] = useState({ email: "", userName: "", password: "" });
 
     const handleChange = (field: string, value: string) => {
         setForm({...form, [field]: value});
     }
 
-    const handleSignUp = () => {
+    const handleSignUp = async () => {
         console.log("Sign Up data:", form);
-        fetch("http://localhost:5124/api/Auth/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email: form.email,
-                userName: form.username,
-                password: form.password,
-            })
-        })
-            .then(response => response.json())
-            .then(res => {
-                if (res.status === 200) {
-                    console.log("Sign Up successfully");
-                    setForm({...form, email: "", username: "", password: "" });
-                }
-                else
-                    console.log("Something went wrong");
-            })
-            .catch((err) => { console.log("Error occurred: ", err); })
+        try {
+            const response = await axios.post("https://ramprage-api.itstep.click/api/Auth/register", form);
+            const { data } = response;
+            console.log("Returned data:", data);
+
+            if (data.success) {
+                Alert.alert(
+                    "Success",
+                    "Successfully registered!",
+                    [],
+                    { cancelable: true }
+                );
+                setForm({ email: "", userName: "", password: "" });
+            } else {
+                Alert.alert(
+                    "Error",
+                    data.message || "Registration failed. Please try again.",
+                    [],
+                    { cancelable: true }
+                );
+            }
+        } catch (e: any) {
+            console.error("Sign Up Error:", e.response?.data || e.message);
+            Alert.alert(
+                "Error",
+                e.response?.data?.message || "An error occurred during registration.",
+                [],
+                { cancelable: true }
+            );
+        }
     }
+
 
     return (
         <SafeAreaProvider>
@@ -75,9 +88,9 @@ const RegisterScreen = () => {
                             />
                             <FormField
                                 title={"Username"}
-                                value={form.username}
+                                value={form.userName}
                                 placeholder={"Enter username..."}
-                                handleChangeText={(value: string) => handleChange("username", value)}
+                                handleChangeText={(value: string) => handleChange("userName", value)}
                                 autoCapitalize="none"
                             />
                             <FormField

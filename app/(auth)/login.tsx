@@ -1,4 +1,5 @@
 import {
+    Alert,
     Animated,
     Dimensions,
     KeyboardAvoidingView,
@@ -11,18 +12,49 @@ import {SafeAreaProvider} from "react-native-safe-area-context";
 import ScrollView = Animated.ScrollView;
 import {useRouter} from "expo-router";
 import {useState} from "react";
-import FormField from "@/components/FormField";;
+import FormField from "@/components/FormField";
+import axios from "axios";
 
 const LoginScreen = () => {
     const router = useRouter();
-    const [form, setForm] = useState({ initial: "", password: "" });
+    const [form, setForm] = useState({ identifier: "", password: "" });
 
     const handleChange = (field: string, value: string) => {
         setForm({...form, [field]: value});
     }
 
-    const handleSignIn = () => {
-        console.log("SignIn", form);
+    const handleSignIn = async () => {
+        console.log("Sign In data:", form);
+        try {
+            const response = await axios.post("https://ramprage-api.itstep.click/api/Auth/login", form);
+            const {data} = response;
+            console.log("Returned data:", data);
+
+            if (data.success) {
+                Alert.alert(
+                    "Success",
+                    "Successfully logged in!",
+                    [],
+                    { cancelable: true }
+                );
+                setForm({ identifier: "", password: "" });
+            } else {
+                Alert.alert(
+                    "Error",
+                    data.message || "Log in failed. Please try again.",
+                    [],
+                    { cancelable: true }
+                );
+            }
+        } catch (e: any) {
+            console.error("Sign In Error:", e.response?.data || e.message);
+            Alert.alert(
+                "Error",
+                e.response?.data?.message || "An error occurred during logging in.",
+                [],
+                { cancelable: true }
+            );
+        }
     }
 
     return (
@@ -46,9 +78,9 @@ const LoginScreen = () => {
                             
                             <FormField
                                 title={"Username or Email"}
-                                value={form.initial}
+                                value={form.identifier}
                                 placeholder={"Enter username or email..."}
-                                handleChangeText={(value: string) => handleChange("initial", value)}
+                                handleChangeText={(value: string) => handleChange("identifier", value)}
                                 keyboardType="email-address"
                                 autoCapitalize="none"
                                 />
