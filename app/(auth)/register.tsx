@@ -46,6 +46,7 @@ const RegisterScreen = () => {
                     [],
                     { cancelable: true }
                 );
+                setForm(prev => ({ ...prev, password: "" }));
             }
         } catch (e: any) {
             console.error("Sign Up Error:", e.response?.data || e.message);
@@ -55,9 +56,9 @@ const RegisterScreen = () => {
                 [],
                 { cancelable: true }
             );
+            setForm(prev => ({ ...prev, password: "" }));
         }
-    }
-
+    };
 
     return (
         <SafeAreaProvider>

@@ -13,11 +13,13 @@ import ScrollView = Animated.ScrollView;
 import {useRouter} from "expo-router";
 import {useState} from "react";
 import FormField from "@/components/FormField";
-import axios from "axios";
+import {useLoginMutation} from "@/services/api.auth";
 
 const LoginScreen = () => {
     const router = useRouter();
     const [form, setForm] = useState({ identifier: "", password: "" });
+
+    const [login, { isLoading }] = useLoginMutation();
 
     const handleChange = (field: string, value: string) => {
         setForm({...form, [field]: value});
@@ -26,36 +28,34 @@ const LoginScreen = () => {
     const handleSignIn = async () => {
         console.log("Sign In data:", form);
         try {
-            const response = await axios.post("https://ramprage-api.itstep.click/api/Auth/login", form);
-            const {data} = response;
-            console.log("Returned data:", data);
+            const res = await login(form).unwrap();
+            console.log("Returned data:", res);
 
-            if (data.success) {
-                Alert.alert(
-                    "Success",
-                    "Successfully logged in!",
-                    [],
-                    { cancelable: true }
-                );
-                setForm({ identifier: "", password: "" });
-            } else {
-                Alert.alert(
-                    "Error",
-                    data.message || "Log in failed. Please try again.",
-                    [],
-                    { cancelable: true }
-                );
-            }
-        } catch (e: any) {
-            console.error("Sign In Error:", e.response?.data || e.message);
             Alert.alert(
-                "Error",
-                e.response?.data?.message || "An error occurred during logging in.",
+                "Success",
+                "Successfully logged in!",
                 [],
                 { cancelable: true }
             );
+            setForm({ identifier: "", password: "" });
+        } catch (err: any) {
+            console.error("Full RTK Sign In Error:", err);
+            const errorMessage =
+                err?.data?.error
+                || err?.error
+                || "An error occurred during logging in.";
+
+            Alert.alert(
+                "Error",
+                errorMessage,
+                [],
+                { cancelable: true }
+            );
+            setForm(prev => ({ ...prev, password: "" }));
         }
-    }
+    };
+
+
 
     return (
         <SafeAreaProvider>
