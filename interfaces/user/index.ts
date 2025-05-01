@@ -22,14 +22,12 @@ export interface IRegister {
     image: File | null;
 }
 
-export interface IUserInfo {
-    id: number;
-    username: string;
-    email: string;
-    role: string;
-}
-
 export interface IUserState {
     user: IUser | null;
     token: string | null;
+}
+
+export interface IUserPayload {
+    user: IUser;
+    token: string;
 }

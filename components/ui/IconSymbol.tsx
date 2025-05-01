@@ -15,6 +15,7 @@ const MAPPING = {
   'chevron.right': 'chevron-right',
   'person.crop.circle': 'person',
   'person.badge.plus': 'person-add',
+  'person.circle': 'account-circle',
 } as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],

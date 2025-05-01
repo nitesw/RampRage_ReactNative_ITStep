@@ -14,12 +14,18 @@ import {useRouter} from "expo-router";
 import {useState} from "react";
 import FormField from "@/components/FormField";
 import {useLoginMutation} from "@/services/api.auth";
+import {useAppDispatch} from "@/redux/store";
+import {saveToSecureStore} from "@/utils/secureStore";
+import {setCredentials} from "@/redux/user/userSlice";
+import {IUser, IUserPayload} from "@/interfaces/user";
+import {jwtParse} from "@/utils/jwtParse";
 
 const LoginScreen = () => {
     const router = useRouter();
     const [form, setForm] = useState({ identifier: "", password: "" });
 
     const [login, { isLoading }] = useLoginMutation();
+    const dispatch = useAppDispatch();
 
     const handleChange = (field: string, value: string) => {
         setForm({...form, [field]: value});
@@ -31,13 +37,14 @@ const LoginScreen = () => {
             const res = await login(form).unwrap();
             console.log("Returned data:", res);
 
-            Alert.alert(
-                "Success",
-                "Successfully logged in!",
-                [],
-                { cancelable: true }
-            );
+            await saveToSecureStore('access-token', res.token);
+            const userCredentials: IUserPayload = {
+                user: jwtParse(res.token) as IUser,
+                token: res.token
+            }
+            dispatch(setCredentials(userCredentials));
             setForm({ identifier: "", password: "" });
+            router.replace("/(auth)/profile");
         } catch (err: any) {
             console.error("Full RTK Sign In Error:", err);
             const errorMessage =
