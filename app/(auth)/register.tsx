@@ -15,6 +15,7 @@ import {useRouter} from "expo-router";
 import {useState} from "react";
 import FormField from "@/components/FormField";
 import axios from "axios";
+import buttonStyles from "@/styles/buttonStyles";
 
 const RegisterScreen = () => {
     const router = useRouter();
@@ -104,7 +105,7 @@ const RegisterScreen = () => {
 
                             <TouchableOpacity
                                 onPress={handleSignUp}
-                                className="w-full bg-blue-400 p-4 rounded-lg mt-4"
+                                style={buttonStyles.mainBtn}
                             >
                                 <Text className="text-white text-center text-lg font-bold">
                                     Sign Up
@@ -112,7 +113,7 @@ const RegisterScreen = () => {
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => router.replace("/login")}
-                                className="w-full bg-gray-300 p-4 rounded-lg mt-4"
+                                style={buttonStyles.secBtn}
                             >
                                 <Text className="text-white text-center text-lg font-bold">
                                     Already have an account? Sign In Here!

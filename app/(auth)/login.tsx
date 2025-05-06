@@ -4,7 +4,7 @@ import {
     Dimensions,
     KeyboardAvoidingView,
     Platform,
-    SafeAreaView,
+    SafeAreaView, StyleSheet,
     Text, TouchableOpacity,
     View
 } from "react-native";
@@ -19,6 +19,7 @@ import {saveToSecureStore} from "@/utils/secureStore";
 import {setCredentials} from "@/redux/user/userSlice";
 import {IUser, IUserPayload} from "@/interfaces/user";
 import {jwtParse} from "@/utils/jwtParse";
+import buttonStyles from "@/styles/buttonStyles";
 
 const LoginScreen = () => {
     const router = useRouter();
@@ -44,7 +45,7 @@ const LoginScreen = () => {
             }
             dispatch(setCredentials(userCredentials));
             setForm({ identifier: "", password: "" });
-            router.replace("/(auth)/profile");
+            router.replace("/profile");
         } catch (err: any) {
             console.error("Full RTK Sign In Error:", err);
             const errorMessage =
@@ -61,8 +62,6 @@ const LoginScreen = () => {
             setForm(prev => ({ ...prev, password: "" }));
         }
     };
-
-
 
     return (
         <SafeAreaProvider>
@@ -98,10 +97,10 @@ const LoginScreen = () => {
                                 handleChangeText={(value: string) => handleChange("password", value)}
                                 secureTextEntry={true}
                             />
-                            
+
                             <TouchableOpacity
                                 onPress={handleSignIn}
-                                className="w-full bg-blue-400 p-4 rounded-lg mt-4"
+                                style={buttonStyles.mainBtn}
                                 >
                                 <Text className="text-white text-center text-lg font-bold">
                                     Sign In
@@ -109,9 +108,9 @@ const LoginScreen = () => {
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => router.replace("/register")}
-                                className="w-full bg-gray-300 p-4 rounded-lg mt-4"
+                                style={buttonStyles.secBtn}
                             >
-                                <Text className="text-white text-center text-lg font-bold">
+                                <Text className="text-gray-200 text-center text-lg font-bold">
                                     Don't have an account? Sign Up Here!
                                 </Text>
                             </TouchableOpacity>

@@ -3,6 +3,7 @@ import {useRouter} from "expo-router";
 import {logOut} from "@/redux/user/userSlice";
 import {removeValueFromSecureStore} from "@/utils/secureStore";
 import {Text, TouchableOpacity, View, StyleSheet} from "react-native";
+import AppLogo from "@/components/AppLogo";
 
 const ProfileScreen = () => {
     const dispatch = useAppDispatch();
@@ -18,6 +19,8 @@ const ProfileScreen = () => {
 
     return (
         <View style={styles.container}>
+            <AppLogo />
+
             <Text style={styles.title}>User info:</Text>
             {user ? (
                 <>
@@ -41,7 +44,7 @@ const ProfileScreen = () => {
 
 const styles = StyleSheet.create({
     container: {flex: 1, justifyContent: "center", padding: 20},
-    title: {fontSize: 20, marginBottom: 15, fontWeight: "bold"},
+    title: {fontSize: 20, marginBottom: 15, fontWeight: "bold", color: 'white'},
     logoutButton: {
         marginTop: 30,
         padding: 12,

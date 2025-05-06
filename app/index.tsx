@@ -17,6 +17,7 @@ import {
     TouchableOpacity
 } from "react-native";
 import ScrollView = Animated.ScrollView;
+import buttonStyles from "@/styles/buttonStyles";
 
 const WelcomeScreen = () => {
     const dispatch = useAppDispatch();
@@ -61,7 +62,7 @@ const WelcomeScreen = () => {
 
                             <TouchableOpacity
                                 onPress={() => router.replace("/login")}
-                                className="w-full bg-blue-500 p-4 rounded-lg mt-4"
+                                style={buttonStyles.mainBtn}
                             >
                                 <Text className="text-white text-center text-lg font-bold">
                                     Log In to our app!
@@ -74,3 +75,5 @@ const WelcomeScreen = () => {
         </SafeAreaProvider>
     )
 }
+
+export default WelcomeScreen
