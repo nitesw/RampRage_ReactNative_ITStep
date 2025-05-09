@@ -11,7 +11,7 @@ export interface ILogin {
     identifier: string;
     password: string;
 }
-export interface ILoginResponse {
+export interface IAuthResponse {
     token: string;
 }
 

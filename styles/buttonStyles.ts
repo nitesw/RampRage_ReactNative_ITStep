@@ -22,6 +22,16 @@ const buttonStyles = StyleSheet.create({
         borderColor: "white",*/
 
         boxShadow: '5 5 0 0 rgba(120, 2, 116, 0.5)'
+    },
+    uploadBtn: {
+        width: "100%",
+        backgroundColor: "#39a00d",
+        padding: 16,
+        marginTop: 4,
+        marginBottom: 16,
+        borderStyle: "solid",
+
+        boxShadow: '5 5 0 0 rgba(83, 237, 17, 0.4)'
     }
 })
 

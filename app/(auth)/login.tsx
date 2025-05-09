@@ -44,6 +44,13 @@ const LoginScreen = () => {
                 token: res.token
             }
             dispatch(setCredentials(userCredentials));
+
+            Alert.alert(
+                "Success",
+                "Successfully logged in!",
+                [],
+                { cancelable: true }
+            );
             setForm({ identifier: "", password: "" });
             router.replace("/profile");
         } catch (err: any) {
