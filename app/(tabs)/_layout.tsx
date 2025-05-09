@@ -34,6 +34,19 @@ export default function TabLayout() {
                     tabBarIcon: ({color}) => <IconSymbol size={28} name="person.circle" color={color}/>,
                 }}
             />
+            <Tabs.Screen
+                name="categories"
+                options={{
+                    title: 'Categories',
+                    tabBarIcon: ({color}) => <IconSymbol size={28} name="category.fill" color={color}/>,
+                }}
+            />
+            <Tabs.Screen
+                name="createCategory"
+                options={{
+                    href: null
+                }}
+            />
         </Tabs>
     );
 }

@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {getValueFromSecureStore} from "@/utils/secureStore";
 import {setCredentials} from "@/redux/user/userSlice";
 import {IUser, IUserPayload} from "@/interfaces/user";
@@ -18,9 +18,12 @@ import {
 } from "react-native";
 import ScrollView = Animated.ScrollView;
 import buttonStyles from "@/styles/buttonStyles";
+import LoadingOverlay from "@/components/LoadingOverlay";
 
 const WelcomeScreen = () => {
     const dispatch = useAppDispatch();
+
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         getValueFromSecureStore('access-token')
@@ -33,6 +36,10 @@ const WelcomeScreen = () => {
                     dispatch(setCredentials(userCredentials));
                     router.replace("/profile");
                 }
+                else {
+                    router.replace('/login');
+                }
+                setIsLoading(false);
             })
             .catch((error) => {
                 console.error(error);
@@ -46,6 +53,7 @@ const WelcomeScreen = () => {
                     behavior={Platform.OS === "ios" ? "padding" : "height"}
                     className="flex-1"
                 >
+                    <LoadingOverlay visible={isLoading} />
                     <ScrollView
                         contentContainerStyle={{flexGrow: 1, paddingHorizontal: 20}}
                         keyboardShouldPersistTaps="handled"
@@ -57,17 +65,17 @@ const WelcomeScreen = () => {
                             }}
                         >
                             <Text className={"text-3xl font-bold mb-6 text-white"}>
-                                Welcome to our app!
+                                Data is loading...
                             </Text>
 
-                            <TouchableOpacity
+                            {/*<TouchableOpacity
                                 onPress={() => router.replace("/login")}
                                 style={buttonStyles.mainBtn}
                             >
                                 <Text className="text-white text-center text-lg font-bold">
                                     Log In to our app!
                                 </Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity>*/}
                         </View>
                     </ScrollView>
                 </KeyboardAvoidingView>

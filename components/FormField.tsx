@@ -20,7 +20,7 @@ const FormField: React.FC<FormFieldProps> = ({
                                              }) => {
     return (
         <View className={`w-full mb-4 ${otherStyles}`}>
-            <Text className="ml-2 mb-1 text-base text-gray-300 font-medium">
+            <Text className="ml-2 mb-1 text-base text-white font-medium">
                 {title}
             </Text>
             <View className="w-full h-14 px-4 shadow-sm flex flex-row items-center"
@@ -28,7 +28,7 @@ const FormField: React.FC<FormFieldProps> = ({
             >
                 <TextInput
                     placeholder={placeholder}
-                    placeholderTextColor={"#454545"}
+                    placeholderTextColor={"#9ca3af"}
                     value={value}
                     onChangeText={handleChangeText}
                     className="flex-1 text-white font-medium text-base"
@@ -41,12 +41,12 @@ const FormField: React.FC<FormFieldProps> = ({
 
 const styles = StyleSheet.create({
     input: {
-        backgroundColor: "#212220",
+        // backgroundColor: "#212220",
         borderStyle: "solid",
-        /*borderWidth: 1,
-        borderColor: "white",*/
+        borderWidth: 1,
+        borderColor: "white",
 
-        boxShadow: '5 5 0 0 rgba(83, 237, 17, 0.4)'
+        // boxShadow: '5 5 0 0 rgba(83, 237, 17, 0.4)'
         /*borderBottomColor: "#780274",
         borderRightColor: "#53ed11",*/
     },

@@ -4,6 +4,7 @@ import {logOut} from "@/redux/user/userSlice";
 import {removeValueFromSecureStore} from "@/utils/secureStore";
 import {Text, TouchableOpacity, View, StyleSheet} from "react-native";
 import AppLogo from "@/components/AppLogo";
+import buttonStyles from "@/styles/buttonStyles";
 
 const ProfileScreen = () => {
     const dispatch = useAppDispatch();
@@ -30,9 +31,9 @@ const ProfileScreen = () => {
 
                     <TouchableOpacity
                         onPress={handleLogOut}
-                        style={styles.logoutButton}
+                        style={buttonStyles.mainBtn}
                     >
-                        <Text style={styles.logoutText}>Logout</Text>
+                        <Text className={"text-center text-lg font-bold"} style={buttonStyles.mainTextBtn}>Logout</Text>
                     </TouchableOpacity>
                 </>
             ) : (
@@ -45,14 +46,6 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
     container: {flex: 1, justifyContent: "center", padding: 20},
     title: {fontSize: 20, marginBottom: 15, fontWeight: "bold", color: 'white'},
-    logoutButton: {
-        marginTop: 30,
-        padding: 12,
-        backgroundColor: "#ff4d4d",
-        borderRadius: 8,
-        alignItems: "center",
-    },
-    logoutText: { color: "white", fontWeight: "bold" },
 });
 
 export default ProfileScreen;

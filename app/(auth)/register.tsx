@@ -14,7 +14,6 @@ import ScrollView = Animated.ScrollView;
 import {useRouter} from "expo-router";
 import {useState} from "react";
 import FormField from "@/components/FormField";
-import axios from "axios";
 import buttonStyles from "@/styles/buttonStyles";
 import {useRegisterMutation} from "@/services/api.auth";
 import * as ImagePicker from 'expo-image-picker';
@@ -23,6 +22,7 @@ import {IUser, IUserPayload} from "@/interfaces/user";
 import {jwtParse} from "@/utils/jwtParse";
 import {setCredentials} from "@/redux/user/userSlice";
 import {useAppDispatch} from "@/redux/store";
+import LoadingOverlay from "@/components/LoadingOverlay";
 
 const RegisterScreen = () => {
     const router = useRouter();
@@ -130,6 +130,7 @@ const RegisterScreen = () => {
                         contentContainerStyle={{flexGrow: 1, paddingHorizontal: 20, paddingTop: 20}}
                         keyboardShouldPersistTaps="handled"
                     >
+                        <LoadingOverlay visible={isLoading} />
                         <View
                             className="w-full flex justify-center items-center my-6"
                             style={{
@@ -172,7 +173,7 @@ const RegisterScreen = () => {
                                 onPress={pickImage}
                                 style={buttonStyles.uploadBtn}
                                 >
-                                <Text className="text-white text-center text-lg font-bold">
+                                <Text className="text-center text-lg font-bold" style={buttonStyles.uploadTextBtn}>
                                     Upload Profile Picture
                                 </Text>
                             </TouchableOpacity>
@@ -188,7 +189,7 @@ const RegisterScreen = () => {
                                 onPress={handleSignUp}
                                 style={buttonStyles.mainBtn}
                             >
-                                <Text className="text-white text-center text-lg font-bold">
+                                <Text className="text-center text-lg font-bold" style={buttonStyles.mainTextBtn}>
                                     Sign Up
                                 </Text>
                             </TouchableOpacity>
@@ -196,7 +197,7 @@ const RegisterScreen = () => {
                                 onPress={() => router.replace("/login")}
                                 style={buttonStyles.secBtn}
                             >
-                                <Text className="text-white text-center text-lg font-bold">
+                                <Text className="text-center text-lg font-bold" style={buttonStyles.secTextBtn}>
                                     Already have an account? Sign In Here!
                                 </Text>
                             </TouchableOpacity>

@@ -16,6 +16,7 @@ const MAPPING = {
   'person.crop.circle': 'person',
   'person.badge.plus': 'person-add',
   'person.circle': 'account-circle',
+  'category.fill': 'category',
 } as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],

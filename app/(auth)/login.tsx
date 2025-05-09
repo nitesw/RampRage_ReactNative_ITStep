@@ -20,6 +20,7 @@ import {setCredentials} from "@/redux/user/userSlice";
 import {IUser, IUserPayload} from "@/interfaces/user";
 import {jwtParse} from "@/utils/jwtParse";
 import buttonStyles from "@/styles/buttonStyles";
+import LoadingOverlay from "@/components/LoadingOverlay";
 
 const LoginScreen = () => {
     const router = useRouter();
@@ -81,6 +82,7 @@ const LoginScreen = () => {
                         contentContainerStyle={{flexGrow: 1, paddingHorizontal: 20}}
                         keyboardShouldPersistTaps="handled"
                         >
+                        <LoadingOverlay visible={isLoading} />
                         <View
                             className="w-full flex justify-center items-center my-6"
                             style={{
@@ -109,7 +111,7 @@ const LoginScreen = () => {
                                 onPress={handleSignIn}
                                 style={buttonStyles.mainBtn}
                                 >
-                                <Text className="text-white text-center text-lg font-bold">
+                                <Text className="text-center text-lg font-bold" style={buttonStyles.mainTextBtn}>
                                     Sign In
                                 </Text>
                             </TouchableOpacity>
@@ -117,7 +119,7 @@ const LoginScreen = () => {
                                 onPress={() => router.replace("/register")}
                                 style={buttonStyles.secBtn}
                             >
-                                <Text className="text-gray-200 text-center text-lg font-bold">
+                                <Text className="text-center text-lg font-bold" style={buttonStyles.secTextBtn}>
                                     Don't have an account? Sign Up Here!
                                 </Text>
                             </TouchableOpacity>
